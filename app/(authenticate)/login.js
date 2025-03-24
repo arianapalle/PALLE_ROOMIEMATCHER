@@ -1,8 +1,6 @@
-import { StyleSheet, Text, View,ScrollView, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native'; // Import Image component
+import { StyleSheet, Text, View, SafeAreaView, Image, pressed, TextInput, Pressable } from 'react-native'; // Import Image component
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'expo-router';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -10,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -43,178 +42,79 @@ const Login = () => {
 
   return (
     
-    <SafeAreaView style=
-      {{
-        flex: 1,
-        backgroundColor: "white",
-        alignItems: "center"
-      }}
-    >
+    <SafeAreaView style={styles.container}>
 
-      <View style=
-        {{
-          height: 200,
-          backgroundColor: "skyblue",
-          width: "100%",
-        }}
-      >
-        <View style=
-          {{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 25
-          }}
-        >
-          <Image
-
-            style=
-            {{
-              width: 150,
-              height: 80,
-              resizeMode: "contain"
-            }}
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/2163/2163350.png", // Corrected to "uri"
-            }}
-          />
-        </View>
-        <Text style=
-          {{
-            marginTop: 20,
-            textAlign: "center",
-            fontSize: 20,
-            fontFamily: "GillSans-SemiBold",
-            fontWeight: "bold",
-          }}
-        >
-          Roomie Matcher
-        </Text>
+      <View style={styles.LogoContainer}> 
+      <Image source={require("../../assets/RMLogo.png")} style={{ width: 70, height: 70, margin:10}}/>
+      <Text style={styles.AppName}>Roomie Matcher</Text>
       </View>
-      <KeyboardAvoidingView>
-        <View style={{ alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              marginTop: 25,
-              color: "#3A7CA5"
-            }}
-          >
-            Log in to your Account
-          </Text>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 20,
-          }}
-        >
-          <Image
-            style={{ width: 150, height: 80, resizeMode: "cover" }}
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/3664/3664065.png",
-            }}
-          />
-        </View>
 
-        <View style={{ marginTop: 20 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 5,
-              backgroundColor: "#87CEEB",
-              paddingVertical: 5,
-              marginTop: 30,
-            }}
-          >
-            <MaterialIcons style={{ marginLeft: 8 }} name="email" size={24} color="white" />
+      <View style={styles.ItemContainer}>
+        <Text style={styles.LoginAcc}>Log in to your Account</Text>
+
+          <View style={styles.InputContainer}>
             <TextInput
               value={email}
               onChangeText={(text) => setEmail(text)}
-              placeholder="Enter your email"
-              placeholderTextColor={"white"}
-              style={{
-                color: "white",
-                marginVertical: 10,
-                width: 300,
-                fontSize: password ? 17 : 17,
-              }}
+              placeholder="Email address"
+              placeholderTextColor={"#87CEEB"}
+              style={styles.InputBox}
             />
-          </View>
 
-          <View style={{ marginTop: 10 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-                backgroundColor: "#87CEEB",
-                paddingVertical: 5,
-                marginTop: 30,
-              }}
-            >
-              <AntDesign style={{ marginLeft: 7 }} name="lock" size={24} color="black" />
-              <TextInput
+            <TextInput
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry={true}
-                placeholder="Enter your password"
-                placeholderTextColor={"white"}
-                style={{
-                  color: "white",
-                  marginVertical: 10,
-                  width: 300,
-                  fontSize: password ? 17 : 17
-                }}
+                placeholder="Password"
+                placeholderTextColor={"#87CEEB"}
+                style={styles.InputBox}
               />
-            </View>
           </View>
-          <View style={{ marginTop: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text>Keep me logged in</Text>
 
-            <Text style={{ color: "#3A7CA5", fontWeight: "500" }}>Forgot Password</Text>
+
+          <View style={styles.DecorTxt}>
+            <Text style={styles.TextLang}>Keep me logged in</Text>
+            <Text style={styles.TextLang}>Forgot Password</Text>
           </View>
-          <View style={{ marginTop: 35 }} />
+
           <Pressable
               onPress={() => {
                 console.log("Login button pressed!");
                 handleLogin();
               }}
             style={{
-              width: 200,
-              backgroundColor: "#87CEEB",
-              borderRadius: 6,
-              marginLeft: "auto",
-              marginRight: "auto",
-              padding: 15
-            }}
+              width: 150,
+              backgroundColor: "#6DC9EF",
+              borderRadius: 50,
+              padding: 13,
+              marginTop: 50,
+              opacity: pressed ? 0.7 : 1,
+              }}
           >
             <Text
               style={{
                 textAlign: "center",
                 color: "white",
                 fontSize: 16,
-                fontWeight: "bold"
+                fontWeight: 700,
               }}
             >
               Login
             </Text>
           </Pressable>
-          <Pressable onPress={() => router.replace("/register")} style={{ marginTop: 12 }}>
+          
+          <Pressable onPress={() => router.replace("/register")} style={{ marginTop: 20 }}>
             <Text
               style={{
                 textAlign: "center",
                 color: "gray",
-                fontSize: 16
+                fontSize: 15,
               }}
             >
               Don't have an account? Sign Up
             </Text>
           </Pressable>
-        </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
     
   );
@@ -223,6 +123,57 @@ const Login = () => {
 export default Login;
 
 const styles = StyleSheet.create({
-
-
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#fff", 
+  },
+  LogoContainer:{
+    height: 200,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  AppName: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: "#87CEEB",
+  },
+  ItemContainer:{
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff", 
+    backgroundColor: "#9FDBF4", 
+    borderTopLeftRadius: 40,  
+    borderTopRightRadius: 40, 
+  },
+  LoginAcc: {
+    marginTop: -40,
+    marginBottom: 50,
+    fontSize: 26,
+    fontWeight: 700,
+    color: "#fff",
+    textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.2)", 
+    textShadowOffset: { width: 2, height: 2 }, 
+    textShadowRadius: 4,
+  },
+  InputBox: {
+    marginVertical: 15,
+    width: 330,
+    fontSize: 16,
+    padding: 13,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+  },
+  DecorTxt: {
+    marginTop: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 100,
+  },
+  
+  TextLang: {
+    color: "#585F62",
+  }
 });
